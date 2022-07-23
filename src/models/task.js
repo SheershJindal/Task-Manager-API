@@ -10,16 +10,12 @@ const taskSchema = mongoose.Schema({
     completed: {
         type: Boolean,
         default: false
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 })
-
-// taskSchema.pre('save', async function (next){
-//     const task = this
-
-//     if(task.isModified('password')){
-//         task.password = await bcrypt.hash(password, 8)
-//     }
-// })
 
 const Task = mongoose.model('Task', taskSchema)
 
