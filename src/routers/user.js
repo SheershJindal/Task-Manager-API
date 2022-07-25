@@ -11,7 +11,7 @@ router.post('/users', async (req, res) => {
     try {
         await user.save()
         const token = await user.generateToken()
-        res.status(201).send({user, token})
+        res.status(201).send({ user, token })
     } catch (err) {
         res.status(400).send(err)
     }
@@ -19,18 +19,18 @@ router.post('/users', async (req, res) => {
 
 //User login
 router.post('/users/login', async (req, res) => {
-    try{
+    try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateToken()
-        res.send({user, token})
-    } catch(err) {
+        res.send({ user, token })
+    } catch (err) {
         res.status(400).send(err)
     }
 })
 
 //Logout
 router.post('/users/logout', auth, async (req, res) => {
-    try{
+    try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
         })
@@ -38,18 +38,18 @@ router.post('/users/logout', auth, async (req, res) => {
         await req.user.save()
 
         res.send()
-    }catch(err){
+    } catch (err) {
         res.status(500).send()
     }
 })
 
 //Logout all
 router.post('/users/logoutAll', auth, async (req, res) => {
-    try{
+    try {
         req.user.tokens = []
         await req.user.save()
         res.send()
-    } catch (err){
+    } catch (err) {
         res.status(500).send()
     }
 })
